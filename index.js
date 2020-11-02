@@ -1,3 +1,24 @@
+const headerEl = document.querySelector("header");
+const scrollToTop = document.querySelector(".scrollToTop");
+
+window.addEventListener("scroll", () => {
+  let height = headerEl.getBoundingClientRect().height;
+
+  if (window.pageYOffset - height > 800) {
+    if (!headerEl.classList.contains("sticky")) {
+      headerEl.classList.add("sticky");
+    }
+  } else {
+    headerEl.classList.remove("sticky");
+  }
+
+  if (window.pageYOffset > 2000) {
+    scrollToTop.style.display = "block";
+  } else {
+    scrollToTop.style.display = "none";
+  }
+});
+
 const glide = new Glide(".glide");
 const captionsEl = document.querySelectorAll(".slide-caption");
 
@@ -39,4 +60,56 @@ filterBtns.addEventListener("click", (e) => {
 
     isotope.arrange({ filter: filterOption });
   }
+});
+
+const StaggeringOption = {
+  delay: 300,
+  distance: "50px",
+  duration: 500,
+  easing: "ease-in-out",
+  origin: "bottom",
+};
+
+ScrollReveal().reveal(".feature", { ...StaggeringOption, interval: 350 });
+ScrollReveal().reveal(".service-item", { ...StaggeringOption, interval: 350 });
+
+ScrollReveal().reveal(".data-section", {
+  beforeReveal: () => {
+    anime({
+      targets: ".data-piece .num",
+      innerHTML: (el) => {
+        return [0, el.innerHTML];
+      },
+      duration: 2000,
+      round: 1,
+      easing: "easeInExpo",
+    });
+    dataSectionEl.style.backgroundPosition = `center calc(50% - ${
+      dataSectionEl.getBoundingClientRect().bottom / 5
+    }px)`;
+  },
+});
+
+const dataSectionEl = document.querySelector(".data-section");
+window.addEventListener("scroll", () => {
+  const bottom = dataSectionEl.getBoundingClientRect().bottom;
+  const top = dataSectionEl.getBoundingClientRect().top;
+
+  if (bottom >= 0 && top <= window.innerHeight) {
+    dataSectionEl.style.backgroundPosition = `center calc(50% - ${
+      bottom / 5
+    }px)`;
+  }
+});
+
+const scroll = new SmoothScroll('nav a[href*="#"], .scrollToTop a[href*="#"]', {
+  header: "header",
+  offset: 80,
+});
+
+const exploreBtnEls = document.querySelectorAll(".explore-btn");
+exploreBtnEls.forEach((exploreBtnEl) => {
+  exploreBtnEl.addEventListener("click", () => {
+    scroll.animateScroll(document.querySelector("#about-us"));
+  });
 });
