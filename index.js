@@ -113,3 +113,9 @@ exploreBtnEls.forEach((exploreBtnEl) => {
     scroll.animateScroll(document.querySelector("#about-us"));
   });
 });
+
+// 折叠按钮
+const burgerEl = document.querySelector(".burger")
+burgerEl.addEventListener("click",()=>{
+  headerEl.classList.toggle("open")
+})
