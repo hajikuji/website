@@ -107,6 +107,12 @@ const scroll = new SmoothScroll('nav a[href*="#"], .scrollToTop a[href*="#"]', {
   offset: 80,
 });
 
+document.addEventListener("scrollStart", () => {
+  if (headerEl.classList.contains("open")) {
+    headerEl.classList.remove("open");
+  }
+});
+
 const exploreBtnEls = document.querySelectorAll(".explore-btn");
 exploreBtnEls.forEach((exploreBtnEl) => {
   exploreBtnEl.addEventListener("click", () => {
@@ -115,7 +121,7 @@ exploreBtnEls.forEach((exploreBtnEl) => {
 });
 
 // 折叠按钮
-const burgerEl = document.querySelector(".burger")
-burgerEl.addEventListener("click",()=>{
-  headerEl.classList.toggle("open")
-})
+const burgerEl = document.querySelector(".burger");
+burgerEl.addEventListener("click", () => {
+  headerEl.classList.toggle("open");
+});
